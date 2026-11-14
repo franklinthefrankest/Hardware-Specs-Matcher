@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can I Run It? Hardware Specs Matcher</title>
+<style>
+:root{--bg:#0e1320;--sf:#161c2d;--sf2:#1d2540;--ln:#2a3555;--tx:#e8ecf6;--mu:#98a4c2;--ac:#7aa2ff;
+--g:#3ddc97;--y:#ffc857;--r:#ff6b6b;--gb:#3ddc9722;--yb:#ffc85722;--rb:#ff6b6b22}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.1;margin:8px 0 4px;letter-spacing:-.02em}
+h1 span{color:var(--ac)}
+.sub{color:var(--mu);margin:0 0 20px}
+h2{font-size:1rem;margin:0 0 12px;color:var(--mu);font-weight:600}
+.panel{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
+.main{display:grid;gap:16px}
+label{display:block;font-size:.85rem;color:var(--mu);margin-bottom:4px}
+select,input[type=search]{width:100%;background:var(--sf2);color:var(--tx);border:1px solid var(--ln);border-radius:10px;padding:11px 12px;font:inherit}
+select:focus,input:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.preset{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--ln)}
+.srch{display:flex;gap:8px}.srch select{width:auto}.cnt{color:var(--mu);font-size:.8rem;margin:8px 0 0}
+.cards{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:8px;max-height:420px;overflow:auto;padding-right:2px}
+.card{text-align:left;background:var(--sf2);color:var(--tx);border:1px solid var(--ln);border-radius:10px;padding:10px;cursor:pointer;font:inherit}
+.card small{display:block;color:var(--mu);font-size:.75rem}
+.card:hover{border-color:var(--ac)}
+.card[aria-pressed=true]{border-color:var(--ac);background:#27335c}
+.empty{color:var(--mu);grid-column:1/-1;margin:6px 0}
+.badge{border-radius:14px;border:2px solid;padding:20px 18px;margin-bottom:16px}
+.badge .ic{font-size:2.4rem;line-height:1}
+.badge h3{margin:8px 0 4px;font-size:clamp(1.3rem,4.5vw,1.8rem);line-height:1.2}
+.badge p{margin:0;color:var(--tx);opacity:.85}
+.b3,.b2{border-color:var(--g);background:var(--gb);color:var(--g)}
+.b1{border-color:var(--y);background:var(--yb);color:var(--y)}
+.b0{border-color:var(--r);background:var(--rb);color:var(--r)}
+.badge p{color:var(--tx)}
+.row{padding:12px 0;border-top:1px solid var(--ln)}
+.row:first-of-type{border-top:0;padding-top:0}
+.rt{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.rt b{font-size:1rem}
+.chip{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:99px}
+.c0{background:var(--rb);color:var(--r)}.c1{background:var(--yb);color:var(--y)}.c2,.c3{background:var(--gb);color:var(--g)}
+.you{color:var(--mu);font-size:.85rem;margin:2px 0 8px}
+.track{position:relative;height:12px;border-radius:99px;background:var(--sf2)}
+.fill{height:100%;border-radius:99px}
+.f0{background:var(--r)}.f1{background:var(--y)}.f2,.f3{background:var(--g)}
+.tick{position:absolute;top:-4px;width:2px;height:20px;background:var(--tx);opacity:.7}
+.leg{display:flex;justify-content:space-between;color:var(--mu);font-size:.75rem;margin-top:6px;gap:8px}
+.ad{border:1px dashed var(--ln);border-radius:12px;padding:14px;margin-top:8px;color:var(--mu);font-size:.9rem}
+.ad .tag{font-size:.7rem;color:var(--mu);display:block;margin-bottom:6px}
+.ad a{display:inline-block;margin-top:8px;background:var(--ac);color:#0e1320;font-weight:700;text-decoration:none;padding:8px 14px;border-radius:9px}
+.ad strong{color:var(--tx)}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:920px){.main{grid-template-columns:420px 1fr;align-items:start}.right{position:sticky;top:16px}.cards{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Can I Run It? <span>Hardware Specs Matcher</span></h1>
+  <p class="sub">Pick your PC parts, choose a game or app, and get an instant verdict.</p>
+
+  <div class="main">
+    <div class="left">
+      <section class="panel" aria-labelledby="h-spec">
+        <h2 id="h-spec">Your PC</h2>
+        <div class="preset"><label for="preset">Quick preset</label><select id="preset"></select></div>
+        <div class="grid">
+          <div><label for="cpu">CPU (processor)</label><select id="cpu"></select></div>
+          <div><label for="gpu">GPU (graphics card)</label><select id="gpu"></select></div>
+          <div><label for="ram">RAM</label><select id="ram"></select></div>
+          <div><label for="sto">Storage type</label><select id="sto"></select></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-game">
+        <h2 id="h-game">Game or software</h2>
+        <label for="q" class="sr" style="position:absolute;left:-9999px">Search</label>
+        <div class="srch"><input type="search" id="q" placeholder="Search games and apps" autocomplete="off"><label for="tf" style="position:absolute;left:-9999px">Filter by type</label><select id="tf"><option value="">All</option><option>Game</option><option>Software</option></select></div>
+        <p class="cnt" id="cnt"></p>
+        <div class="cards" id="cards"></div>
+      </section>
+    </div>
+
+    <div class="right">
+      <div id="badge" class="badge" role="status" aria-live="polite"></div>
+      <section class="panel" aria-labelledby="h-bd">
+        <h2 id="h-bd">Component breakdown</h2>
+        <div id="rows"></div>
+        <p class="leg" style="margin-top:12px"><span>White marks on each bar: minimum (left) and recommended (right).</span></p>
+      </section>
+      <aside class="ad" id="ad" aria-label="Sponsored recommendation"></aside>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+// Scores are relative performance on a 0-100 scale (approximate, for comparison only).
+const CPUS=[["Intel Core i5-4460 (2014)",22],["Intel Core i3-1115G4 (laptop)",28],["Intel Core i5-1135G7 (laptop)",36],["Intel Core i3-10100",34],["Intel Core i5-10400F",45],["AMD Ryzen 5 3600",50],["AMD Ryzen 5 5600",58],["Intel Core i5-12400F",60],["AMD Ryzen 7 5800X3D",72],["Intel Core i7-13700K",85],["AMD Ryzen 9 7950X",95],["Intel Core i9-14900K",100]];
+const GPUS=[["Intel UHD Graphics (integrated)",4],["Intel Iris Xe (integrated)",10],["NVIDIA GTX 750 Ti",9],["NVIDIA GTX 1050 Ti",16],["NVIDIA GTX 1650",20],["NVIDIA GTX 1060 6GB",26],["AMD RX 580 8GB",27],["NVIDIA GTX 1660 Super",36],["NVIDIA RTX 2060",44],["NVIDIA RTX 3060",50],["AMD RX 6600 XT",52],["NVIDIA RTX 4060",58],["NVIDIA RTX 4060 Ti",66],["NVIDIA RTX 3080",80],["NVIDIA RTX 4080",92],["NVIDIA RTX 4090",100]];
+const RAMS=[4,8,12,16,32,64];
+const STOS=[["HDD (hard disk drive)",1],["SSD (solid state drive)",2]];
+const PRESETS=[
+ ["Custom",null],
+ ["Student Laptop / Integrated Graphics",[1,1,1,1]],
+ ["Old Office PC",[0,2,1,0]],
+ ["Mid-Range Budget PC",[5,7,3,1]],
+ ["Mid-Range Gaming PC",[7,9,3,1]],
+ ["High-End Gaming Rig",[9,14,4,1]]
+];
+// g(name,type,[cpu,gpu,ramGB,storage(1=HDD ok,2=SSD),cpuName,gpuName] min, same for recommended)
+const g=(n,t,a,b)=>({n,t,min:{c:a[0],g:a[1],r:a[2],s:a[3],ct:a[4],gt:a[5]},rec:{c:b[0],g:b[1],r:b[2],s:b[3],ct:b[4],gt:b[5]}});
+const GAMES=[
+ g("Cyberpunk 2077","Game",[34,26,12,2,"Core i7-6700 / Ryzen 5 1600","GTX 1060 6GB"],[58,48,16,2,"Core i7-12700 / Ryzen 7 7800X3D","RTX 2060 Super"]),
+ g("Grand Theft Auto V","Game",[12,9,4,1,"Core 2 Quad Q6600","GTX 660"],[20,16,8,1,"Core i5-3470","GTX 1050 Ti"]),
+ g("Valorant","Game",[8,4,4,1,"Core 2 Duo E8400","Intel HD 4000"],[20,16,8,1,"Core i3-4150","GTX 1050 Ti"]),
+ g("Minecraft (Java + shaders)","Game",[14,4,4,1,"Core i3-3210","Intel HD 4000"],[30,16,8,1,"Core i5-4690","GTX 1050 Ti"]),
+ g("Elden Ring","Game",[38,26,12,2,"Core i5-8400 / Ryzen 3 3300X","GTX 1060 3GB"],[48,36,16,2,"Core i7-8700K / Ryzen 5 3600X","GTX 1660 Super"]),
+ g("Baldur's Gate 3","Game",[22,20,8,2,"Core i5-4690 / FX 4350","GTX 970"],[48,44,16,2,"Core i7-8700K / Ryzen 5 3600","RTX 2060"]),
+ g("Counter-Strike 2","Game",[22,14,8,1,"Core i5-750","GTX 1050"],[38,26,16,2,"Core i5-10400","GTX 1060 6GB"]),
+ g("Fortnite","Game",[16,10,8,1,"Core i3-3225","Intel HD 4000"],[28,36,16,2,"Core i5-7300U","GTX 1660 Super"]),
+ g("Football Manager 2024","Game",[20,4,4,1,"Core i3-3220","Intel HD 4000"],[30,10,8,1,"Core i5-6500","Intel Iris Xe"]),
+ g("Adobe Premiere Pro","Software",[25,10,8,1,"Core i5-7500","2 GB VRAM GPU"],[50,30,16,2,"Core i7-10700","GTX 1660"]),
+ g("Blender 4","Software",[22,16,8,1,"Core i5-4590","GTX 1050 Ti"],[65,58,32,2,"Ryzen 7 5800X","RTX 4060"]),
+ g("DaVinci Resolve","Software",[30,20,16,2,"Core i7-6700","GTX 1650"],[60,50,32,2,"Core i7-12700","RTX 3060"]),
+ // ---- more games ----
+ g("Red Dead Redemption 2","Game",[30,20,8,1,"Core i5-2500K / Ryzen 5 1500X","GTX 770"],[38,26,12,1,"Core i7-4770K / Ryzen 5 1500X","GTX 1060 6GB"]),
+ g("The Witcher 3: Wild Hunt","Game",[18,12,6,1,"Core i5-2500K","GTX 660"],[28,18,8,1,"Core i7-3770","GTX 770"]),
+ g("Starfield","Game",[38,30,16,2,"Ryzen 5 2600X / Core i7-6800K","GTX 1070 Ti / RX 5700"],[50,52,16,2,"Ryzen 5 3600X / Core i5-10600K","RTX 2080 / RX 6800 XT"]),
+ g("Hogwarts Legacy","Game",[30,20,16,2,"Core i5-6600 / Ryzen 5 1400","GTX 960 / RX 470"],[48,44,16,2,"Core i7-8700 / Ryzen 5 3600","RTX 2070 / GTX 1080 Ti"]),
+ g("Apex Legends","Game",[18,8,6,1,"Core i3-6300","GeForce GT 640"],[30,20,8,1,"Core i5-3570K","GTX 970"]),
+ g("Call of Duty: Warzone","Game",[28,20,8,2,"Core i5-6600K / Ryzen 5 1400","GTX 960 / RX 470"],[50,44,16,2,"Core i7-8700K / Ryzen 5 1600X","RTX 2060 / RX 5700"]),
+ g("League of Legends","Game",[10,4,4,1,"Core i3-530","Intel HD 4000"],[18,10,8,1,"Core i5-3300","GTX 560"]),
+ g("Dota 2","Game",[14,4,4,1,"Core i3-3220","Intel HD 4000"],[24,16,8,1,"Core i5-4460","GTX 1050 Ti"]),
+ g("Rocket League","Game",[14,10,4,1,"Core 2 Duo 2.4 GHz","GTX 760"],[24,20,8,1,"Core i5-3570K","GTX 1650"]),
+ g("Overwatch 2","Game",[14,8,6,1,"Core i3 / Phenom X3 8650","GTX 600 series"],[28,26,8,1,"Core i7 / Ryzen 5","GTX 1060"]),
+ g("Rainbow Six Siege","Game",[14,10,8,1,"Core i3-560 / FX-4120","GTX 460"],[22,16,16,1,"Core i5-2500K","GTX 1050 Ti"]),
+ g("Genshin Impact","Game",[20,8,8,1,"Core i5","GTX 1030"],[34,26,16,2,"Core i7","GTX 1060 6GB"]),
+ g("Palworld","Game",[22,16,16,1,"Core i5-3570K","GTX 1050 2GB"],[48,24,32,2,"Core i9-9900K","RTX 2050"]),
+ g("Helldivers 2","Game",[30,26,8,2,"Ryzen 5 1500X / Core i7-4790K","GTX 1060 / RX 580"],[50,44,16,2,"Ryzen 7 3700X / Core i7-9700K","RTX 2060"]),
+ g("Stardew Valley","Game",[6,4,4,1,"Core 2 Duo 2 GHz","Intel HD 3000"],[12,4,4,1,"Core i3-3220","Intel HD 4000"]),
+ g("Terraria","Game",[6,4,4,1,"Dual core 2.0 GHz","Intel HD 3000"],[10,4,4,1,"Dual core 3.0 GHz","Intel HD 4000"]),
+ g("The Sims 4","Game",[10,4,4,1,"Core 2 Duo E4300","Intel HD 3000"],[24,9,8,1,"Core i5-4430","GTX 750 Ti"]),
+ g("Civilization VI","Game",[18,6,8,1,"Core i3 2.5 GHz","Intel HD 530"],[32,20,16,1,"Core i5-4690","GTX 970"]),
+ g("Cities: Skylines II","Game",[30,20,8,2,"Core i5-6600K / Ryzen 5 1600","GTX 970"],[58,80,16,2,"Core i5-12600K / Ryzen 5 5600X","RTX 3080"]),
+ g("Microsoft Flight Simulator 2024","Game",[34,30,16,2,"Ryzen 5 2600X / Core i5-8400","GTX 1070 / RX 5700"],[58,58,32,2,"Ryzen 5 5600X / Core i5-12600K","RTX 4060 / RX 6700 XT"]),
+ g("Forza Horizon 5","Game",[22,20,8,2,"Core i5-4460","GTX 970"],[38,44,16,2,"Core i5-8400","RTX 2060"]),
+ g("Assassin's Creed Mirage","Game",[30,26,8,2,"Core i7-4790K / Ryzen 5 1600","GTX 1060"],[40,44,16,2,"Core i7-8700K / Ryzen 5 3600","RTX 2060"]),
+ g("Black Myth: Wukong","Game",[38,26,16,2,"Core i5-8400 / Ryzen 5 1600","GTX 1060 6GB"],[50,44,16,2,"Core i7-9700 / Ryzen 5 5500","RTX 2060"]),
+ g("Monster Hunter Wilds","Game",[45,36,16,2,"Core i5-10400 / Ryzen 5 3600X","GTX 1660 Super"],[58,50,16,2,"Core i5-11600K / Ryzen 5 5600X","RTX 3060"]),
+ g("Dark Souls III","Game",[18,9,8,1,"Core i3-2100","GTX 750 Ti"],[28,20,8,1,"Core i7-3770","GTX 970"]),
+ g("DOOM Eternal","Game",[30,16,8,2,"Ryzen 5 1500X / Core i5-6600K","GTX 1050 Ti"],[38,26,8,2,"Ryzen 7 1800X / Core i7-6700K","GTX 1060 6GB"]),
+ g("Resident Evil 4 (2023)","Game",[30,16,8,2,"Ryzen 5 1600 / Core i5-7500","GTX 1050 Ti"],[40,30,16,2,"Ryzen 5 3600 / Core i7-8700","GTX 1070"]),
+ g("The Last of Us Part I","Game",[30,20,16,2,"Core i7-4770K / Ryzen 5 1500X","GTX 970 / RX 470"],[45,46,16,2,"Core i7-8700 / Ryzen 5 3600","RTX 2070 / RX 5700 XT"]),
+ g("God of War (PC)","Game",[18,20,8,2,"Core i5-2500K / Ryzen 3 1200","GTX 960"],[30,26,8,2,"Core i5-6600K / Ryzen 5 2400G","GTX 1060 6GB"]),
+ g("Horizon Zero Dawn","Game",[20,18,8,1,"Core i5-2500K / FX 6300","GTX 780"],[28,26,16,2,"Core i7-4770K / Ryzen 5 1500X","GTX 1060 6GB"]),
+ g("Marvel's Spider-Man Remastered","Game",[24,12,8,2,"Core i3-4160 / Ryzen 3 1200","GTX 950"],[32,26,16,2,"Core i5-4670 / Ryzen 5 1600","GTX 1060"]),
+ g("The Elder Scrolls V: Skyrim SE","Game",[14,9,4,1,"Core i5-750","GTX 470"],[28,20,8,1,"Core i7-4770","GTX 770"]),
+ g("Fallout 4","Game",[18,8,8,1,"Core i5-2300","GTX 550 Ti"],[28,20,8,1,"Core i7-4790","GTX 780"]),
+ g("Total War: Warhammer III","Game",[18,9,8,1,"Core i3-4170","GTX 750 Ti"],[34,26,16,1,"Core i5-8400","GTX 1060 6GB"]),
+ g("Satisfactory","Game",[20,9,8,1,"Core i5-3570K","GTX 760"],[30,26,16,2,"Core i7-4790","GTX 1060"]),
+ g("Rust","Game",[22,10,8,1,"Core i7-3770","GTX 670"],[34,26,16,2,"Core i7-4790K","GTX 980"]),
+ g("ARK: Survival Ascended","Game",[40,26,16,2,"Core i7-10700K / Ryzen 5 3600","GTX 1060 6GB"],[60,66,32,2,"Core i7-12700 / Ryzen 7 5800X","RTX 3080"]),
+ g("Diablo IV","Game",[22,12,8,2,"Core i5-2500K / FX 8350","GTX 660"],[28,20,16,2,"Core i5-4670K / Ryzen 5 1500X","GTX 970"]),
+ g("Path of Exile 2","Game",[30,26,16,2,"Core i5-8500 / Ryzen 5 2600","GTX 1060"],[48,44,16,2,"Core i7-9700K / Ryzen 5 3600","RTX 2060"]),
+ g("Warframe","Game",[10,8,4,1,"Core i5-2300","GTX 570"],[20,16,8,1,"Core i7-3770","GTX 1050 Ti"]),
+ g("Destiny 2","Game",[20,12,8,1,"Core i3-3250","GTX 660"],[28,26,8,2,"Core i5-7500","GTX 1060"]),
+ g("EA Sports FC 25","Game",[22,16,8,2,"Core i5-6600K / Ryzen 5 1600","GTX 1050 Ti"],[38,36,16,2,"Core i7-6700 / Ryzen 7 2700X","GTX 1660"]),
+ g("NBA 2K25","Game",[18,10,8,1,"Core i5-4460","GTX 770"],[30,26,16,2,"Core i7-7700","GTX 1060"]),
+ g("Hollow Knight","Game",[10,4,4,1,"Core 2 Duo E5200","GeForce 9800GTX+"],[14,8,8,1,"Core i5","GTX 560"]),
+ g("Hades","Game",[14,6,8,1,"Dual core 2.2 GHz","Intel HD 5000"],[20,10,8,1,"Core i5","Intel Iris Xe"]),
+ g("Roblox","Game",[10,4,4,1,"Dual core 1.6 GHz","Integrated graphics"],[22,10,8,1,"Core i5","Dedicated GPU"]),
+ g("Sea of Thieves","Game",[18,9,8,1,"Core i3-4130 / FX-6300","GTX 750 Ti"],[28,20,8,1,"Core i5-4460","GTX 1060"]),
+ g("Euro Truck Simulator 2","Game",[12,4,4,1,"Dual core 2.4 GHz","Intel HD 4000"],[22,12,8,1,"Core i5-3570K","GTX 760"]),
+ // ---- more software ----
+ g("Adobe Photoshop","Software",[14,8,8,1,"Core i5 2 GHz","Integrated GPU"],[28,16,16,2,"Core i7 / Ryzen 5","4 GB VRAM GPU"]),
+ g("Adobe Lightroom Classic","Software",[20,8,8,1,"Core i5-6500","Integrated GPU"],[40,26,16,2,"Core i7-9700","GTX 1060"]),
+ g("Adobe After Effects","Software",[24,10,16,2,"Core i5-7500","2 GB VRAM GPU"],[50,36,32,2,"Core i7-10700","GTX 1660 Super"]),
+ g("Adobe Illustrator","Software",[14,8,8,1,"Core i5 2 GHz","Integrated GPU"],[30,16,16,2,"Core i7","4 GB VRAM GPU"]),
+ g("Adobe InDesign","Software",[14,6,8,1,"Core i5 2 GHz","Integrated GPU"],[28,10,16,2,"Core i7","Iris Xe"]),
+ g("AutoCAD","Software",[20,8,8,1,"Core i5 2.5 GHz","Integrated GPU"],[40,26,16,2,"Core i7 3+ GHz","GTX 1060"]),
+ g("SolidWorks","Software",[30,20,16,2,"Core i7-6700","GTX 1050 Ti"],[50,44,32,2,"Core i7-10700K","RTX 2060"]),
+ g("Autodesk Maya","Software",[28,20,8,2,"Core i5-7500","GTX 1050 Ti"],[55,44,32,2,"Core i7-12700","RTX 2060"]),
+ g("Cinema 4D","Software",[30,20,16,2,"Core i7-6700","GTX 1050 Ti"],[65,50,32,2,"Ryzen 7 5800X","RTX 3060"]),
+ g("Houdini","Software",[40,26,16,2,"Core i7-8700","GTX 1060"],[70,58,32,2,"Ryzen 9 5900X","RTX 4060"]),
+ g("Unreal Engine 5","Software",[35,36,16,2,"Quad-core 2.5-3.5 GHz","GTX 1660 Super"],[70,66,32,2,"Core i7-12700K / Ryzen 7 5800X","RTX 4060 Ti"]),
+ g("Unity Editor","Software",[20,10,8,1,"Core i5-6500","Intel Iris Xe"],[40,26,16,2,"Core i7-9700","GTX 1060"]),
+ g("OBS Studio (streaming)","Software",[24,9,8,1,"Core i5-4460","GTX 750 Ti"],[40,26,16,2,"Core i7-9700","GTX 1650+ (NVENC)"]),
+ g("HandBrake","Software",[20,4,4,1,"Core i3","Integrated GPU"],[50,9,8,1,"Ryzen 5 5600","Integrated GPU"]),
+ g("Visual Studio 2022","Software",[18,4,8,1,"Core i5-4460","Integrated GPU"],[40,10,16,2,"Core i7-9700","Iris Xe"]),
+ g("Android Studio","Software",[24,4,8,1,"Core i5-6500","Integrated GPU"],[40,10,16,2,"Core i7-9700","Iris Xe"]),
+ g("Ableton Live","Software",[24,4,8,1,"Core i5-6500","Integrated GPU"],[50,10,16,2,"Core i7-10700","Iris Xe"]),
+ g("FL Studio","Software",[18,4,4,1,"Core i3","Integrated GPU"],[34,10,16,2,"Core i5-10400","Iris Xe"]),
+ g("Topaz Video AI","Software",[34,26,16,2,"Core i5-9400","GTX 1060 6GB"],[60,66,32,2,"Core i7-12700","RTX 4060 Ti"]),
+ g("Stable Diffusion (local)","Software",[34,44,16,2,"Modern 6-core CPU","RTX 2060 (6 GB VRAM)"],[60,66,32,2,"Modern 8-core CPU","RTX 4060 Ti (16 GB VRAM)"])
+];
+GAMES.sort((a,b)=>a.n.localeCompare(b.n));
+
+/* ---------- STATE & DOM ---------- */
+const $=id=>document.getElementById(id);
+let cur=GAMES.findIndex(x=>x.n==="Cyberpunk 2077");
+const fill=(el,arr,fn)=>{el.innerHTML=arr.map((x,i)=>`<option value="${i}">${fn(x)}</option>`).join("")};
+fill($("cpu"),CPUS,x=>x[0]);fill($("gpu"),GPUS,x=>x[0]);fill($("ram"),RAMS,x=>x+" GB");fill($("sto"),STOS,x=>x[0]);
+fill($("preset"),PRESETS,x=>x[0]);
+const LABELS=["Falls short","Meets minimum","Meets recommended","Exceeds"];
+
+/* ---------- ENGINE ---------- */
+const status=(v,min,rec)=>v<min?0:v<rec?1:v>=rec*1.4?3:2;
+const stoText=s=>s>=2?"SSD":"HDD or SSD";
+
+function calc(){
+  const gm=GAMES[cur],u={c:CPUS[$("cpu").value][1],g:GPUS[$("gpu").value][1],r:RAMS[$("ram").value],s:STOS[$("sto").value][1]};
+  const rows=[
+   {k:"CPU",you:CPUS[$("cpu").value][0],key:"c",min:gm.min.c,rec:gm.rec.c,mt:gm.min.ct,rt:gm.rec.ct},
+   {k:"GPU",you:GPUS[$("gpu").value][0],key:"g",min:gm.min.g,rec:gm.rec.g,mt:gm.min.gt,rt:gm.rec.gt},
+   {k:"RAM",you:u.r+" GB",key:"r",min:gm.min.r,rec:gm.rec.r,mt:gm.min.r+" GB",rt:gm.rec.r+" GB"},
+   {k:"Storage",you:STOS[$("sto").value][0],key:"s",min:gm.min.s,rec:gm.rec.s,mt:stoText(gm.min.s),rt:stoText(gm.rec.s)}
+  ].map(r=>({...r,v:u[r.key],st:status(u[r.key],r.min,r.rec)}));
+  const worst=Math.min(...rows.map(r=>r.st));
+  render(gm,rows,Math.min(worst,2),u);
+}
+
+/* ---------- RENDER ---------- */
+function render(gm,rows,lvl,u){
+  const B={2:["✔","Can Run Smoothly - Recommended Specs Met","Your PC meets or beats the recommended specs for "+gm.n+"."],
+           1:["⚠","Can Run on Low Settings - Minimum Specs Met","Your PC clears the minimum for "+gm.n+", but falls below recommended in: "+rows.filter(r=>r.st<2).map(r=>r.k).join(", ")+"."],
+           0:["✖","Cannot Run - Upgrade Required","Below the minimum for "+gm.n+": "+rows.filter(r=>r.st===0).map(r=>r.k).join(", ")+"."]}[lvl];
+  $("badge").className="badge b"+lvl;
+  $("badge").innerHTML=`<div class="ic" aria-hidden="true">${B[0]}</div><h3>${B[1]}</h3><p>${B[2]}</p>`;
+  $("rows").innerHTML=rows.map(r=>{
+    const sc=Math.max(r.rec*1.4,r.v*1.05),pc=x=>Math.min(100,x/sc*100).toFixed(1);
+    return `<div class="row"><div class="rt"><b>${r.k}</b><span class="chip c${r.st}">${LABELS[r.st]}</span></div>
+    <div class="you">You: ${r.you}</div>
+    <div class="track" role="img" aria-label="${r.k}: ${LABELS[r.st]}"><div class="fill f${r.st}" style="width:${pc(r.v)}%"></div><i class="tick" style="left:${pc(r.min)}%"></i><i class="tick" style="left:calc(${pc(r.rec)}% - 2px)"></i></div>
+    <div class="leg"><span>Min: ${r.mt}</span><span>Rec: ${r.rt}</span></div></div>`}).join("");
+  ads(gm,rows,u);
+}
+
+// Ad / affiliate slot. Replace href="#" with your affiliate links, or drop in an ad network snippet.
+function ads(gm,rows,u){
+  let h;
+  const gpuRow=rows[1],ramRow=rows[2];
+  if(gpuRow.st<2){
+    const t=GPUS.filter(x=>x[1]>=gm.rec.g).sort((a,b)=>a[1]-b[1])[0]||GPUS[GPUS.length-1];
+    h=`<strong>Recommended GPU upgrade:</strong> ${t[0]}<br>The most affordable card in our list that reaches the recommended level for ${gm.n}.<br><a href="#" rel="sponsored noopener" target="_blank">Check price</a>`;
+  }else if(ramRow.st<2){
+    const t=RAMS.find(x=>x>=gm.rec.r);
+    h=`<strong>Recommended RAM upgrade:</strong> ${t} GB kit<br>Gets your memory to the recommended level for ${gm.n}.<br><a href="#" rel="sponsored noopener" target="_blank">Check price</a>`;
+  }else h=`<strong>Gear for ${gm.n}</strong><br>Your specs are covered. Looking for a monitor or SSD upgrade?<br><a href="#" rel="sponsored noopener" target="_blank">Browse picks</a>`;
+  $("ad").innerHTML=`<span class="tag">Sponsored</span>${h}`;
+}
+
+function cards(){
+  const q=$("q").value.trim().toLowerCase();
+  const tf=$("tf").value;
+  const list=GAMES.map((x,i)=>[x,i]).filter(([x])=>(!tf||x.t===tf)&&x.n.toLowerCase().includes(q));
+  $("cnt").textContent=list.length+" of "+GAMES.length+" titles";
+  $("cards").innerHTML=list.length?list.map(([x,i])=>`<button class="card" data-i="${i}" aria-pressed="${i===cur}">${x.n}<small>${x.t}</small></button>`).join(""):`<p class="empty">No match. Try another name.</p>`;
+}
+
+/* ---------- EVENTS ---------- */
+$("cards").addEventListener("click",e=>{const b=e.target.closest(".card");if(!b)return;cur=+b.dataset.i;cards();calc()});
+$("q").addEventListener("input",cards);
+$("tf").addEventListener("change",cards);
+["cpu","gpu","ram","sto"].forEach(id=>$(id).addEventListener("change",()=>{$("preset").value=0;calc()}));
+$("preset").addEventListener("change",e=>{
+  const p=PRESETS[e.target.value][1];if(!p)return;
+  $("cpu").value=p[0];$("gpu").value=p[1];$("ram").value=p[2];$("sto").value=p[3];calc();
+});
+
+/* ---------- INIT ---------- */
+$("preset").value=3;$("preset").dispatchEvent(new Event("change"));cards();calc();
+</script>
+</body>
+</html>
