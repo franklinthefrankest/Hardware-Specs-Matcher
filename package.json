@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "Hardware Specs Matcher / Can I Run It? is a small project for comparing a computer's hardware against the minimum or recommended requirements for a game or application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franklinthefrankest/Hardware-Specs-Matcher.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franklinthefrankest/Hardware-Specs-Matcher/issues"
+  },
+  "homepage": "https://github.com/franklinthefrankest/Hardware-Specs-Matcher#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
